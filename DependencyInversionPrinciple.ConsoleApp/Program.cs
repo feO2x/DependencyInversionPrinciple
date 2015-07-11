@@ -30,31 +30,80 @@ namespace DependencyInversionPrinciple.ConsoleApp
         File
     }
 
+    public interface IReader
+    {
+        ConsoleKeyInfo Read();
+    }
+
+    public class ConsoleReader : IReader
+    {
+        public ConsoleKeyInfo Read()
+        {
+            return Console.ReadKey(true);
+        }
+    }
+
+    public interface IWriter
+    {
+        void Write(char character);
+    }
+
+    public class ConsoleWriter : IWriter
+    {
+        public void Write(char character)
+        {
+            Console.Write(character);
+        }
+    }
+
+    public class FileWriter : IWriter, IDisposable
+    {
+        private readonly StreamWriter _streamWriter;
+
+        public FileWriter(string filePath)
+        {
+            _streamWriter = new StreamWriter(filePath);
+        }
+
+        public void Dispose()
+        {
+            _streamWriter.Dispose();
+        }
+
+        public void Write(char character)
+        {
+            _streamWriter.Write(character);
+        }
+    }
+
     class Program
     {
         static void Main()
         {
-            Copy(Target.File);
+            // Composition Root
+            var reader = new ConsoleReader();
+            //var writer = new ConsoleWriter();
+            var writer = new FileWriter("Text.txt");
+
+            // Run the actual program
+            Copy(reader, writer);
+
+            // Close external resource
+            writer.Dispose();
         }
 
-        private static void Copy(Target target)
+        private static void Copy(IReader reader, IWriter writer) // This is dependency injection
         {
-            if (target == Target.File)
-                File.InitializeStreamWriter("Text.txt");
+            // Copy is now programming only against the IReader and IWriter abstractions
+            // There is no other dependency to concrete classes
 
             while(true)
             {
-                var consoleKeyInfo = Console.ReadKey(true);
+                var consoleKeyInfo = reader.Read();
                 if (consoleKeyInfo.Key == ConsoleKey.Escape)
                     break;
-                if (target == Target.Console)
-                    Console.Write(consoleKeyInfo.KeyChar);
-                else if (target == Target.File)
-                    File.Write(consoleKeyInfo.KeyChar);
+                writer.Write(consoleKeyInfo.KeyChar);
             }
-
-            if (target == Target.File)
-                File.Dispose();
         }
     }
 }
