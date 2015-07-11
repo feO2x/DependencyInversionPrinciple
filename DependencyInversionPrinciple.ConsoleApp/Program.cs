@@ -32,14 +32,16 @@ namespace DependencyInversionPrinciple.ConsoleApp
 
     public interface IReader
     {
-        ConsoleKeyInfo Read();
+        ReadResult Read();
     }
 
     public class ConsoleReader : IReader
     {
-        public ConsoleKeyInfo Read()
+        public ReadResult Read()
         {
-            return Console.ReadKey(true);
+            var consoleKeyInfo = Console.ReadKey(true);
+            return new ReadResult(consoleKeyInfo.KeyChar,
+                                  consoleKeyInfo.Key == ConsoleKey.Escape);
         }
     }
 
@@ -99,10 +101,10 @@ namespace DependencyInversionPrinciple.ConsoleApp
 
             while(true)
             {
-                var consoleKeyInfo = reader.Read();
-                if (consoleKeyInfo.Key == ConsoleKey.Escape)
+                var readResult = reader.Read();
+                if (readResult.ShouldQuit)
                     break;
-                writer.Write(consoleKeyInfo.KeyChar);
+                writer.Write(readResult.Character);
             }
         }
     }
