@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ConsoleReader.cs" />
     <Compile Include="ConsoleWriter.cs" />
+    <Compile Include="CopyProcess.cs" />
     <Compile Include="FileWriter.cs" />
     <Compile Include="IReader.cs" />
     <Compile Include="IWriter.cs" />

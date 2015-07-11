@@ -6,28 +6,15 @@
         {
             // Composition Root
             var reader = new ConsoleReader();
-            //var writer = new ConsoleWriter();
-            var writer = new FileWriter("Text.txt");
+            var writer = new ConsoleWriter();
+            //var writer = new FileWriter("Text.txt");
+            var copyProcess = new CopyProcess(reader, writer);
 
             // Run the actual program
-            Copy(reader, writer);
+            copyProcess.Execute();
 
             // Teardown
-            writer.Dispose();
-        }
-
-        private static void Copy(IReader reader, IWriter writer) // This is dependency injection
-        {
-            // Copy is now programming only against the IReader and IWriter abstractions
-            // There is no other dependency to concrete classes
-
-            while(true)
-            {
-                var readResult = reader.Read();
-                if (readResult.ShouldQuit)
-                    break;
-                writer.Write(readResult.Character);
-            }
+            //writer.Dispose(); Not necessary for ConsoleWriter
         }
     }
 }
