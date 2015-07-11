@@ -12,7 +12,9 @@ namespace DependencyInversionPrinciple.ConsoleApp
             // We're using a DI container now
             var serviceContainer = new ServiceContainer();
             serviceContainer.Register<IReader, ConsoleReader>();
-            serviceContainer.Register<IWriter>(f => new FileWriter(FilePath), new PerRequestLifeTime());
+            serviceContainer.Register<IWriter>(f => new FileWriter(FilePath), "FileWriter", new PerRequestLifeTime());
+            serviceContainer.Register<IWriter, ConsoleWriter>("ConsoleWriter");
+            serviceContainer.Register<IWriter, WriterComposite>();
             serviceContainer.Register<CopyProcess>();
 
             // Run the actual program
