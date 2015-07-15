@@ -1,6 +1,6 @@
 ﻿namespace DependencyInversionPrinciple.ConsoleApp
 {
-    public class ReadResult
+    public struct ReadResult
     {
         public readonly char Character;
         public readonly bool ShouldQuit;
