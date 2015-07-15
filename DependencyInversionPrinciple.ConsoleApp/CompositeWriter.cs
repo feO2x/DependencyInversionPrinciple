@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace DependencyInversionPrinciple.ConsoleApp
 {
-    public class WriterComposite : IWriter
+    public class CompositeWriter : IWriter
     {
         private IEnumerable<IWriter> _writers;
 
-        public WriterComposite(IEnumerable<IWriter> writers)
+        public CompositeWriter(IEnumerable<IWriter> writers)
         {
             if (writers == null) throw new ArgumentNullException("writers");
 

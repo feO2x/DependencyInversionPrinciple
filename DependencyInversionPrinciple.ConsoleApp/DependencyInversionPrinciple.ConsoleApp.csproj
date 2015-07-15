@@ -55,7 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadResult.cs" />
-    <Compile Include="WriterComposite.cs" />
+    <Compile Include="CompositeWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

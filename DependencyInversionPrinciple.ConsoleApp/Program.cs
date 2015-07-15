@@ -14,7 +14,7 @@ namespace DependencyInversionPrinciple.ConsoleApp
             serviceContainer.Register<IReader, ConsoleReader>();
             serviceContainer.Register<IWriter>(f => new FileWriter(FilePath), "FileWriter", new PerRequestLifeTime());
             serviceContainer.Register<IWriter, ConsoleWriter>("ConsoleWriter");
-            serviceContainer.Register<IWriter, WriterComposite>();
+            serviceContainer.Register<IWriter, CompositeWriter>();
             serviceContainer.Register<CopyProcess>();
 
             // Run the actual program
