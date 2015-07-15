@@ -5,7 +5,7 @@ namespace DependencyInversionPrinciple.ConsoleApp
 {
     public class CompositeWriter : IWriter
     {
-        private IEnumerable<IWriter> _writers;
+        private readonly IEnumerable<IWriter> _writers;
 
         public CompositeWriter(IEnumerable<IWriter> writers)
         {
